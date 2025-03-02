@@ -1,0 +1,262 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriOptimize – Smart Solutions for Farming Efficiency</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f9;
+            color: #333;
+        }
+        .hero {
+            background: url('{% static "images/farm-bg.jpg" %}') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 150px 20px;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 80px 20px;
+            text-align: center;
+            background: white;
+        }
+        .feature-box {
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            background: #fff;
+        }
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .feature-box i {
+            font-size: 2.5rem;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        .feature-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .feature-box p {
+            font-size: 1rem;
+            color: #666;
+        }
+        .optimize-btn {
+            display: flex;
+            justify-content: center;
+            margin: 50px 0;
+        }
+        .btn-start {
+            background: #28a745;
+            color: white;
+            font-size: 1.2rem;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-start::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%) rotate(45deg);
+            transition: all 0.5s ease-in-out;
+            z-index: 0;
+        }
+        .btn-start:hover::before {
+            transform: translate(-50%, -50%) rotate(135deg);
+        }
+        .btn-start span {
+            position: relative;
+            z-index: 1;
+        }
+        .btn-start:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .btn-start.pulse {
+            animation: pulse 1.5s infinite;
+        }
+        .case-studies {
+            background: #f4f4f9;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .case-studies h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+        .case-study-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        .case-study-card:hover {
+            transform: translateY(-10px);
+        }
+        .case-study-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .case-study-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .case-study-card p {
+            font-size: 1rem;
+            color: #666;
+        }
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .footer a {
+            color: #28a745;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Maximize Your Farm's Potential with Linear Programming</h1>
+        <p>Optimize Resources, Minimize Costs, and Boost Yields!</p>
+        <p>Harness the power of data-driven decision-making to solve agricultural challenges efficiently.</p>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="feature-box">
+            <i class="fas fa-seedling"></i>
+            <h3>Crop Optimization</h3>
+            <p>Choose the best crops for maximum profit and sustainability.</p>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-tint"></i>
+            <h3>Resource Allocation</h3>
+            <p>Optimize water, fertilizer, and labor usage for better efficiency.</p>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-tractor"></i>
+            <h3>Land Utilization</h3>
+            <p>Plan the most efficient use of your farmland.</p>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-truck"></i>
+            <h3>Supply Chain</h3>
+            <p>Optimize transportation and storage for cost-effective logistics.</p>
+        </div>
+    </section>
+
+    <!-- Start Optimization Button -->
+    <div class="optimize-btn">
+        <a href="{% url 'optimization' %}" class="btn-start pulse">
+            <i class="fas fa-rocket"></i>
+            <span>Start Optimization</span>
+        </a>
+    </div>
+
+    <!-- Case Studies Section -->
+    <section class="case-studies">
+        <h2>Success Stories</h2>
+        <div class="features">
+            <div class="case-study-card">
+                <img src="{% static 'images/case1.jpg' %}" alt="Case Study 1">
+                <h3>Increased Crop Yield by 20%</h3>
+                <p>Learn how a farmer optimized crop rotation and resource allocation.</p>
+            </div>
+            <div class="case-study-card">
+                <img src="{% static 'images/case2.jpg' %}" alt="Case Study 2">
+                <h3>Reduced Water Usage by 30%</h3>
+                <p>Discover how smart irrigation planning saved resources.</p>
+            </div>
+            <div class="case-study-card">
+                <img src="{% static 'images/case3.jpg' %}" alt="Case Study 3">
+                <h3>Optimized Supply Chain</h3>
+                <p>See how a farm reduced transportation costs by 15%.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>&copy; 2023 AgriOptimize. All rights reserved.</p>
+        <p>
+            <a href="#">About Us</a> | 
+            <a href="#">Contact</a> | 
+            <a href="#">Privacy Policy</a>
+        </p>
+        <div>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </footer>
+
+</body>
+</html>
