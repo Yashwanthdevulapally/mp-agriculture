@@ -1,12 +1,96 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Optimization Page</title>
+    <title>Optimization Solver</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <h1>Optimization Page</h1>
-    <p>This is where the linear programming solver will be implemented.</p>
+
+    <h1>Farm Optimization Solver</h1>
+    <form method="POST">
+        {% csrf_token %}
+        
+        <h2>Farm Constraints</h2>
+        <label>Total Land Available (acres):</label>
+        <input type="number" name="total_land" required>
+        
+        <label>Total Budget:</label>
+        <input type="number" name="total_budget" required>
+
+        <label>Total Water Availability (liters):</label>
+        <input type="number" name="total_water" required>
+
+        <label>Total Labor Availability (hours):</label>
+        <input type="number" name="total_labor" required>
+
+        <label>Total Fertilizer Availability (kg):</label>
+        <input type="number" name="total_fertilizer" required>
+
+        <label>Optimization Goal:</label>
+        <select name="optimization_goal">
+            <option value="maximize_profit">Maximize Profit</option>
+            <option value="maximize_yield">Maximize Yield</option>
+            <option value="minimize_water">Minimize Water Usage</option>
+            <option value="balanced">Balanced Approach</option>
+        </select>
+
+        <h2>Crop Data</h2>
+        <div id="crop-list">
+            <div class="crop-entry">
+                <label>Crop Name:</label>
+                <input type="text" name="crop_name" required>
+
+                <label>Profit per Acre:</label>
+                <input type="number" name="profit_per_acre" required>
+
+                <label>Land Requirement (acres):</label>
+                <input type="number" name="land_requirement" required>
+
+                <label>Water Requirement (liters):</label>
+                <input type="number" name="water_requirement" required>
+
+                <label>Labor Requirement (hours):</label>
+                <input type="number" name="labor_requirement" required>
+
+                <label>Fertilizer Requirement (kg):</label>
+                <input type="number" name="fertilizer_requirement" required>
+
+                <label>Growing Time (days):</label>
+                <input type="number" name="growing_time" required>
+            </div>
+        </div>
+
+        <button type="button" onclick="addCrop()">+ Add More Crops</button>
+        <button type="submit">Solve Knapsack</button>
+    </form>
+
+    {% if selected_crops %}
+        <h2>Optimized Crop Selection</h2>
+        <ul>
+            {% for crop in selected_crops %}
+                <li>{{ crop.name }} → {{ crop.land }} acres</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Expected Outcomes</h3>
+        <p><strong>Total Profit:</strong> ${{ total_profit }}</p>
+        <p><strong>Total Water Used:</strong> {{ total_water_used }} liters</p>
+        <p><strong>Total Labor Required:</strong> {{ total_labor_used }} hours</p>
+
+        <h3>Visual Output</h3>
+        <img src="{{ pie_chart }}" alt="Crop Distribution">
+    {% endif %}
+
+    <script>
+        function addCrop() {
+            let cropList = document.getElementById("crop-list");
+            let newCrop = document.querySelector(".crop-entry").cloneNode(true);
+            cropList.appendChild(newCrop);
+        }
+    </script>
+
 </body>
 </html>
