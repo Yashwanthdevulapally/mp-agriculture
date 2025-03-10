@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphical Method Optimization</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Include Plotly for graphing -->
+</head>
+<body>
+    <h1>Graphical Method Optimization</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <!-- Form fields for inputs -->
+        <label for="objective">Objective:</label>
+        <select name="objective" id="objective">
+            <option value="maximize">Maximize Profit</option>
+            <option value="minimize">Minimize Cost</option>
+        </select><br><br>
+
+        <label for="x_profit">Profit/Cost per unit of X:</label>
+        <input type="number" name="x_profit" id="x_profit" required><br><br>
+
+        <label for="y_profit">Profit/Cost per unit of Y:</label>
+        <input type="number" name="y_profit" id="y_profit" required><br><br>
+
+        <label for="land_constraint">Total Land Available:</label>
+        <input type="number" name="land_constraint" id="land_constraint" required><br><br>
+
+        <label for="water_constraint">Total Water Available:</label>
+        <input type="number" name="water_constraint" id="water_constraint" required><br><br>
+
+        <label for="x_land">Land usage per unit of X:</label>
+        <input type="number" name="x_land" id="x_land" required><br><br>
+
+        <label for="y_land">Land usage per unit of Y:</label>
+        <input type="number" name="y_land" id="y_land" required><br><br>
+
+        <label for="x_water">Water usage per unit of X:</label>
+        <input type="number" name="x_water" id="x_water" required><br><br>
+
+        <label for="y_water">Water usage per unit of Y:</label>
+        <input type="number" name="y_water" id="y_water" required><br><br>
+
+        <button type="submit">Calculate</button>
+    </form>
+
+    {% if x_optimal is not None %}
+        <h2>Optimal Solution:</h2>
+        <p>Optimal value of X: {{ x_optimal }}</p>
+        <p>Optimal value of Y: {{ y_optimal }}</p>
+        <p>Optimal {{ objective }} : {{ optimal_value }}</p>
+
+        <!-- Graph container -->
+        <div id="graph" style="width: 600px; height: 400px;"></div>
+
+        <script>
+            // Plotly graph for constraints and optimal solution
+            const landConstraint = {{ land_constraint }};
+            const waterConstraint = {{ water_constraint }};
+            const xLand = {{ x_land }};
+            const yLand = {{ y_land }};
+            const xWater = {{ x_water }};
+            const yWater = {{ y_water }};
+            const xOptimal = {{ x_optimal }};
+            const yOptimal = {{ y_optimal }};
+
+            // Calculate constraint lines
+            const landX = landConstraint / xLand;
+            const landY = landConstraint / yLand;
+            const waterX = waterConstraint / xWater;
+            const waterY = waterConstraint / yWater;
+
+            // Data for the graph
+            const trace1 = {
+                x: [landX, 0],
+                y: [0, landY],
+                mode: 'lines',
+                name: 'Land Constraint',
+                line: { color: 'blue' }
+            };
+
+            const trace2 = {
+                x: [waterX, 0],
+                y: [0, waterY],
+                mode: 'lines',
+                name: 'Water Constraint',
+                line: { color: 'green' }
+            };
+
+            const trace3 = {
+                x: [xOptimal],
+                y: [yOptimal],
+                mode: 'markers',
+                name: 'Optimal Solution',
+                marker: { color: 'red', size: 10 }
+            };
+
+            const layout = {
+                title: 'Graphical Method Optimization',
+                xaxis: { title: 'X (Units)' },
+                yaxis: { title: 'Y (Units)' },
+                showlegend: true
+            };
+
+            Plotly.newPlot('graph', [trace1, trace2, trace3], layout);
+        </script>
+    {% endif %}
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+</body>
+</html>
